@@ -7,386 +7,203 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
-<!-- ===== SIDEBAR DOCK ===== -->
 <nav class="dock">
-  <div class="dock-logo">📷</div>
-  <div class="dock-items">
-    <a class="dock-item active" href="#resolution" data-section="resolution">
-      <span class="icon">🔍</span>
-      <span class="label">分辨率</span>
-    </a>
-    <a class="dock-item" href="#focal" data-section="focal">
-      <span class="icon">🔭</span>
-      <span class="label">焦距</span>
-    </a>
-    <a class="dock-item" href="#exposure" data-section="exposure">
-      <span class="icon">⚡</span>
-      <span class="label">曝光</span>
-    </a>
-    <a class="dock-item" href="#bandwidth" data-section="bandwidth">
-      <span class="icon">📡</span>
-      <span class="label">带宽</span>
-    </a>
-    <a class="dock-item" href="#framerate" data-section="framerate">
-      <span class="icon">⏱</span>
-      <span class="label">帧率</span>
-    </a>
-    <a class="dock-item" href="#pixelpitch" data-section="pixelpitch">
-      <span class="icon">📐</span>
-      <span class="label">像素当量</span>
-    </a>
-    <a class="dock-item" href="#linescan" data-section="linescan">
-      <span class="icon">📏</span>
-      <span class="label">线阵</span>
-    </a>
-    <a class="dock-item" href="#dof" data-section="dof">
-      <span class="icon">🌄</span>
-      <span class="label">景深</span>
-    </a>
-    <a class="dock-item" href="#interfaces" data-section="interfaces">
-      <span class="icon">🔌</span>
-      <span class="label">接口</span>
-    </a>
-    <a class="dock-item" href="#overview" data-section="overview">
-      <span class="icon">📋</span>
-      <span class="label">推荐</span>
-    </a>
-  </div>
-</nav>
-
-<!-- ===== MAIN CONTENT ===== -->
-<div class="main">
-
-  <header class="site-header">
-    <div class="header-left">
-      <h1>工业相机选型计算器</h1>
-      <p>输入参数 · 自动计算 · 一键推荐</p>
-    </div>
-    <button class="theme-toggle" id="theme-toggle" title="切换主题">🌙</button>
-  </header>
-
-  <!-- ===== 1. 分辨率 ===== -->
-  <section id="resolution">
-    <div class="card">
-      <div class="card-header">
-        <span class="icon">🔍</span>
-        <h2>分辨率估算</h2>
-        <span class="tag accent">核心</span>
-      </div>
-      <div class="formula">所需像素 = FOV ÷ 检测精度 × 安全系数 K</div>
-      <div class="field-group">
-        <div class="field"><label>视野 FOV (mm)</label><input type="number" id="res-fov" value="50" min="0.1" step="any"></div>
-        <div class="field"><label>检测精度 (mm) <span class="hint">最小缺陷</span></label><input type="number" id="res-prec" value="0.05" min="0.001" step="any"></div>
-      </div>
-      <div class="field">
-        <label>安全系数 K <span class="hint" id="res-k-hint">K = 3.0</span></label>
-        <input type="range" id="res-k" min="1" max="10" value="3" step="0.5">
-      </div>
-      <div class="result">
-        <span class="rlabel">所需分辨率：</span>
-        <span class="rval blue" id="res-val">3000</span>
-        <span class="runit">像素</span>
-        <span class="rsub" id="res-sub">→ 推荐 500 万像素 (2592×1944)</span>
-      </div>
-      <div class="extra" id="res-extra"></div>
-    </div>
-  </section>
-
-  <!-- ===== 2. 焦距 ===== -->
-  <section id="focal">
-    <div class="card">
-      <div class="card-header">
-        <span class="icon">🔭</span>
-        <h2>焦距计算</h2>
-        <span class="tag">镜头</span>
-      </div>
-      <div class="formula">f = WD × Hₛ ÷ FOV</div>
-      <div class="field-group">
-        <div class="field"><label>工作距离 WD (mm)</label><input type="number" id="foc-wd" value="200" min="1" step="any"></div>
-        <div class="field"><label>视野 FOV (mm)</label><input type="number" id="foc-fov" value="100" min="1" step="any"></div>
-      </div>
-      <div class="field">
-        <label>传感器靶面</label>
-        <select id="foc-sensor">
-          <option value="1/4">1/4″ (3.2×2.4mm)</option>
-          <option value="1/3">1/3″ (4.8×3.6mm)</option>
-          <option value="1/2.5">1/2.5″ (5.76×4.29mm)</option>
-          <option value="1/2" selected>1/2″ (6.4×4.8mm)</option>
-          <option value="1/1.8">1/1.8″ (7.2×5.3mm)</option>
-          <option value="2/3">2/3″ (8.8×6.6mm)</option>
-          <option value="1">1″ (12.8×9.6mm)</option>
-          <option value="4/3">4/3″ (17.3×13mm)</option>
-          <option value="aps-c">APS-C (23.6×15.7mm)</option>
-        </select>
-      </div>
-      <div class="result">
-        <span class="rlabel">推荐焦距：</span>
-        <span class="rval blue" id="foc-val">12.8</span>
-        <span class="runit">mm</span>
-        <span class="rsub" id="foc-sub">→ 可选用 12mm 镜头</span>
-      </div>
-      <div class="extra" id="foc-extra"></div>
-    </div>
-  </section>
-
-  <!-- ===== 3. 曝光时间 ===== -->
-  <section id="exposure">
-    <div class="card">
-      <div class="card-header">
-        <span class="icon">⚡</span>
-        <h2>曝光时间限值</h2>
-        <span class="tag">运动</span>
-      </div>
-      <div class="formula">Tₘₐₓ = 0.5 × p ÷ (v × β)</div>
-      <div class="field-group">
-        <div class="field"><label>运动速度 v (mm/s)</label><input type="number" id="exp-v" value="500" min="0.1" step="any"></div>
-        <div class="field"><label>像素尺寸</label>
-          <select id="exp-pixel">
-            <option value="2.2">2.2 µm</option>
-            <option value="2.74">2.74 µm</option>
-            <option value="3.45" selected>3.45 µm</option>
-            <option value="4.8">4.8 µm</option>
-            <option value="5.86">5.86 µm</option>
-            <option value="7.4">7.4 µm</option>
-          </select>
-        </div>
-      </div>
-      <div class="field"><label>放大倍率 β <span class="hint">自动同步自焦距卡</span></label><input type="number" id="exp-beta" value="0.05" min="0.0001" step="any"></div>
-      <div class="result">
-        <span class="rlabel">最大曝光时间：</span>
-        <span class="rval blue" id="exp-val">103.5</span>
-        <span class="runit">µs</span>
-        <span class="rsub" id="exp-sub">✓ 可配合常规频闪光源</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== 4. 带宽 ===== -->
-  <section id="bandwidth">
-    <div class="card">
-      <div class="card-header">
-        <span class="icon">📡</span>
-        <h2>带宽需求</h2>
-        <span class="tag">传输</span>
-      </div>
-      <div class="formula">BW = W×H×D×F ÷ 8</div>
-      <div class="field-group">
-        <div class="field"><label>分辨率 W (px)</label><input type="number" id="bw-w" value="2592" min="1" step="1"></div>
-        <div class="field"><label>分辨率 H (px)</label><input type="number" id="bw-h" value="1944" min="1" step="1"></div>
-      </div>
-      <div class="field-group">
-        <div class="field"><label>帧率 (FPS)</label><input type="number" id="bw-fps" value="30" min="0.1" step="any"></div>
-        <div class="field"><label>位深</label>
-          <select id="bw-depth">
-            <option value="8">8 bit</option>
-            <option value="10">10 bit</option>
-            <option value="12">12 bit</option>
-            <option value="16">16 bit</option>
-          </select>
-        </div>
-      </div>
-      <div class="result">
-        <span class="rlabel">带宽需求：</span>
-        <span class="rval blue" id="bw-val">151.2</span>
-        <span class="runit">MB/s</span>
-        <span class="rsub" id="bw-sub"></span>
-      </div>
-      <div class="extra" id="bw-extra"></div>
-    </div>
-  </section>
-
-  <!-- ===== 5. 帧率 ===== -->
-  <section id="framerate">
-    <div class="card">
-      <div class="card-header">
-        <span class="icon">⏱</span>
-        <h2>最小帧率</h2>
-        <span class="tag">节拍</span>
-      </div>
-      <div class="formula">FPS = v ÷ (FOV − L − margin)</div>
-      <div class="field-group">
-        <div class="field"><label>运动速度 v (mm/s)</label><input type="number" id="fps-v" value="200" min="0.1" step="any"></div>
-        <div class="field"><label>视野 FOV (mm)</label><input type="number" id="fps-fov" value="120" min="1" step="any"></div>
-      </div>
-      <div class="field-group">
-        <div class="field"><label>物体长度 L (mm)</label><input type="number" id="fps-l" value="100" min="0" step="any"></div>
-        <div class="field"><label>安全边距 (mm)</label><input type="number" id="fps-margin" value="10" min="0" step="any"></div>
-      </div>
-      <div class="result">
-        <span class="rlabel">最小触发帧率：</span>
-        <span class="rval blue" id="fps-val">6.7</span>
-        <span class="runit">FPS</span>
-        <span class="rsub" id="fps-sub"></span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== 6. 像素当量 ===== -->
-  <section id="pixelpitch">
-    <div class="card">
-      <div class="card-header">
-        <span class="icon">📐</span>
-        <h2>像素当量</h2>
-        <span class="tag">精度</span>
-      </div>
-      <div class="formula">像素当量 = FOV ÷ 分辨率</div>
-      <div class="field-group">
-        <div class="field"><label>视野 FOV (mm)</label><input type="number" id="pp-fov" value="50" min="0.1" step="any"></div>
-        <div class="field"><label>传感器分辨率 (px)</label><input type="number" id="pp-res" value="1280" min="1" step="1"></div>
-      </div>
-      <div class="field"><label>目标检测精度 (mm) <span class="hint">用于对比</span></label><input type="number" id="pp-target" value="0.05" min="0.001" step="any"></div>
-      <div class="result">
-        <span class="rlabel">像素当量：</span>
-        <span class="rval blue" id="pp-val">0.0391</span>
-        <span class="runit">mm/pixel</span>
-        <span class="rsub" id="pp-sub"></span>
-      </div>
-      <div class="extra" id="pp-extra"></div>
-    </div>
-  </section>
-
-  <!-- ===== 7. 线阵行频 ===== -->
-  <section id="linescan">
-    <div class="card">
-      <div class="card-header">
-        <span class="icon">📏</span>
-        <h2>线阵行频</h2>
-        <span class="tag">线扫</span>
-      </div>
-      <div class="formula">行频 = v ÷ Δy</div>
-      <div class="field-group">
-        <div class="field"><label>运动速度 v (mm/s)</label><input type="number" id="line-v" value="2000" min="0.1" step="any"></div>
-        <div class="field"><label>纵向精度 Δy (mm)</label><input type="number" id="line-dy" value="0.05" min="0.001" step="any"></div>
-      </div>
-      <div class="field"><label>横向视野 FOV (mm)</label><input type="number" id="line-fov" value="200" min="1" step="any"></div>
-      <div class="result">
-        <span class="rlabel">所需行频：</span>
-        <span class="rval blue" id="line-val">40,000</span>
-        <span class="runit">Hz</span>
-        <span class="rsub" id="line-sub"></span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== 8. 景深 ===== -->
-  <section id="dof">
-    <div class="card">
-      <div class="card-header">
-        <span class="icon">🌄</span>
-        <h2>景深估算</h2>
-        <span class="tag">镜头</span>
-      </div>
-      <div class="formula">DOF ≈ 2 × F × δ × β</div>
-      <div class="field-group">
-        <div class="field"><label>光圈 F 值</label>
-          <select id="dof-f">
-            <option value="1.4">F/1.4</option><option value="2">F/2.0</option>
-            <option value="2.8">F/2.8</option><option value="4" selected>F/4.0</option>
-            <option value="5.6">F/5.6</option><option value="8">F/8.0</option>
-            <option value="11">F/11</option><option value="16">F/16</option>
-          </select>
-        </div>
-        <div class="field"><label>放大倍率 β</label><input type="number" id="dof-beta" value="0.05" min="0.0001" step="any"></div>
-      </div>
-      <div class="result">
-        <span class="rlabel">估算景深：</span>
-        <span class="rval blue" id="dof-val">1.38</span>
-        <span class="runit">mm</span>
-        <span class="rsub" id="dof-sub"></span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== 9. 接口速查 ===== -->
-  <section id="interfaces">
-    <div class="card">
-      <div class="card-header">
-        <span class="icon">🔌</span>
-        <h2>接口带宽速查</h2>
-        <span class="tag">参考</span>
-      </div>
-      <div style="overflow-x:auto">
-        <table class="intf-table">
-          <thead><tr><th>接口</th><th>有效带宽</th><th>最大距离</th><th style="text-align:center">满足当前需求</th></tr></thead>
-          <tbody>
-            <tr><td>USB 2.0</td><td>~35 MB/s</td><td>5 m</td><td style="text-align:center"><span class="intf-check" id="intf-usb2">—</span></td></tr>
-            <tr><td>USB 3.0</td><td>~350 MB/s</td><td>5 m</td><td style="text-align:center"><span class="intf-check" id="intf-usb3">—</span></td></tr>
-            <tr><td>GigE</td><td>~100 MB/s</td><td>100 m</td><td style="text-align:center"><span class="intf-check" id="intf-gige">—</span></td></tr>
-            <tr><td>5GigE</td><td>~500 MB/s</td><td>100 m</td><td style="text-align:center"><span class="intf-check" id="intf-5gige">—</span></td></tr>
-            <tr><td>Camera Link</td><td>~680 MB/s</td><td>10 m</td><td style="text-align:center"><span class="intf-check" id="intf-clink">—</span></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== 选型推荐 ===== -->
-  <section id="overview">
-    <div class="rec-card" id="rec-card">
-      <h2>📋 选型推荐方案</h2>
-      <p class="sub" id="rec-subtitle">基于上方所有输入参数自动生成</p>
-
-      <div class="rec-section">
-        <div class="rec-section-title">📥 输入参数</div>
-        <div class="rec-params" id="rec-params"></div>
-      </div>
-
-      <div class="rec-divider"></div>
-
-      <div class="rec-section">
-        <div class="rec-section-title">✅ 推荐方案</div>
-        <div class="rec-grid" id="rec-grid">
-          <div class="rec-item">
-            <div class="label">相机类型</div>
-            <div class="value" id="rec-camtype">面阵相机</div>
-            <div class="note" id="rec-camnote">500 万像素 CMOS</div>
-            <span class="rec-badge" id="rec-cambadge">全局快门</span>
-          </div>
-          <div class="rec-item">
-            <div class="label">传感器分辨率</div>
-            <div class="value" id="rec-res">2592 × 1944</div>
-            <div class="note" id="rec-resnote">像素当量 0.0193 mm/px</div>
-          </div>
-          <div class="rec-item">
-            <div class="label">镜头焦距</div>
-            <div class="value" id="rec-focal">12 mm</div>
-            <div class="note" id="rec-focalnote">配 1/2″ 靶面</div>
-          </div>
-          <div class="rec-item">
-            <div class="label">推荐接口</div>
-            <div class="value green" id="rec-intf">USB 3.0</div>
-            <div class="note" id="rec-intfnote">带宽充裕</div>
-          </div>
-          <div class="rec-item">
-            <div class="label">曝光 & 光源</div>
-            <div class="value" id="rec-light">频闪 LED</div>
-            <div class="note" id="rec-lightnote">最大曝光 103 µs</div>
-          </div>
-          <div class="rec-item">
-            <div class="label">帧率需求</div>
-            <div class="value" id="rec-fps">6.7 FPS</div>
-            <div class="note" id="rec-fpsnote">低帧率，常规满足</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="action-bar">
-    <button class="btn-action" id="btn-refresh">
-      <span class="icon">🔄</span> 刷新推荐方案
-    </button>
-  </div>
-
-  <div class="footer">
-    工业相机选型计算器 &nbsp;·&nbsp; <a href="javascript:void(0)" onclick="window.print()" style="color:#007aff;text-decoration:none">打印</a>
-  </div>
-
+<div class="dock-logo">📷</div>
+<div class="dock-items">
+<a class="dock-item active" href="#resolution" data-section="resolution"><span class="icon">🔍</span><span class="label">分辨率</span></a>
+<a class="dock-item" href="#focal" data-section="focal"><span class="icon">🔭</span><span class="label">焦距</span></a>
+<a class="dock-item" href="#exposure" data-section="exposure"><span class="icon">⚡</span><span class="label">曝光</span></a>
+<a class="dock-item" href="#bandwidth" data-section="bandwidth"><span class="icon">📡</span><span class="label">带宽</span></a>
+<a class="dock-item" href="#framerate" data-section="framerate"><span class="icon">⏱</span><span class="label">帧率</span></a>
+<a class="dock-item" href="#pixelpitch" data-section="pixelpitch"><span class="icon">📐</span><span class="label">像素当量</span></a>
+<a class="dock-item" href="#linescan" data-section="linescan"><span class="icon">📏</span><span class="label">线阵</span></a>
+<a class="dock-item" href="#dof" data-section="dof"><span class="icon">🌄</span><span class="label">景深</span></a>
+<a class="dock-item" href="#interfaces" data-section="interfaces"><span class="icon">🔌</span><span class="label">接口</span></a>
+<a class="dock-item" href="#overview" data-section="overview"><span class="icon">📋</span><span class="label">推荐</span></a>
 </div>
-
+</nav>
+<div class="main">
+<header class="site-header">
+<div class="header-left"><h1>工业相机选型计算器</h1><p>输入参数 · 自动计算 · 一键推荐</p></div>
+<button class="theme-toggle" id="theme-toggle" title="切换主题">🌙</button>
+</header>
+<section id="resolution">
+<div class="card">
+<div class="card-header"><span class="icon">🔍</span><h2>分辨率估算</h2><span class="tag accent">核心</span></div>
+<div class="formula">所需像素 = FOV ÷ 检测精度 × 安全系数 K</div>
+<div class="field-group">
+<div class="field"><label>视野 FOV (mm)</label><input type="number" id="res-fov" value="50" min="0.1" step="any"></div>
+<div class="field"><label>检测精度 (mm) <span class="hint">最小缺陷</span></label><input type="number" id="res-prec" value="0.05" min="0.001" step="any"></div>
+</div>
+<div class="field"><label>安全系数 K <span class="hint" id="res-k-hint">K = 3.0</span></label><input type="range" id="res-k" min="1" max="10" value="3" step="0.5"></div>
+<div class="result"><span class="rlabel">所需分辨率：</span><span class="rval blue" id="res-val">3000</span><span class="runit">像素</span><span class="rsub" id="res-sub">→ 推荐 500 万像素 (2592×1944)</span></div>
+<div class="extra" id="res-extra"></div>
+</div>
+</section>
+<section id="focal">
+<div class="card">
+<div class="card-header"><span class="icon">🔭</span><h2>焦距计算</h2><span class="tag">镜头</span></div>
+<div class="formula">f = WD × Hₛ ÷ FOV</div>
+<div class="field-group">
+<div class="field"><label>工作距离 WD (mm)</label><input type="number" id="foc-wd" value="200" min="1" step="any"></div>
+<div class="field"><label>视野 FOV (mm)</label><input type="number" id="foc-fov" value="100" min="1" step="any"></div>
+</div>
+<div class="field">
+<label>传感器靶面</label>
+<select id="foc-sensor">
+<option value="1/4">1/4″ (3.2×2.4mm)</option>
+<option value="1/3">1/3″ (4.8×3.6mm)</option>
+<option value="1/2.5">1/2.5″ (5.76×4.29mm)</option>
+<option value="1/2" selected>1/2″ (6.4×4.8mm)</option>
+<option value="1/1.8">1/1.8″ (7.2×5.3mm)</option>
+<option value="2/3">2/3″ (8.8×6.6mm)</option>
+<option value="1">1″ (12.8×9.6mm)</option>
+<option value="4/3">4/3″ (17.3×13mm)</option>
+<option value="aps-c">APS-C (23.6×15.7mm)</option>
+</select>
+</div>
+<div class="result"><span class="rlabel">推荐焦距：</span><span class="rval blue" id="foc-val">12.8</span><span class="runit">mm</span><span class="rsub" id="foc-sub">→ 可选用 12mm 镜头</span></div>
+<div class="extra" id="foc-extra"></div>
+</div>
+</section>
+<section id="exposure">
+<div class="card">
+<div class="card-header"><span class="icon">⚡</span><h2>曝光时间限值</h2><span class="tag">运动</span></div>
+<div class="formula">Tₘₐₓ = 0.5 × p ÷ (v × β)</div>
+<div class="field-group">
+<div class="field"><label>运动速度 v (mm/s)</label><input type="number" id="exp-v" value="500" min="0.1" step="any"></div>
+<div class="field"><label>像素尺寸</label>
+<select id="exp-pixel">
+<option value="2.2">2.2 µm</option>
+<option value="2.74">2.74 µm</option>
+<option value="3.45" selected>3.45 µm</option>
+<option value="4.8">4.8 µm</option>
+<option value="5.86">5.86 µm</option>
+<option value="7.4">7.4 µm</option>
+</select></div>
+</div>
+<div class="field"><label>放大倍率 β <span class="hint">自动同步自焦距卡</span></label><input type="number" id="exp-beta" value="0.05" min="0.0001" step="any"></div>
+<div class="result"><span class="rlabel">最大曝光时间：</span><span class="rval blue" id="exp-val">103.5</span><span class="runit">µs</span><span class="rsub" id="exp-sub">✓ 可配合常规频闪光源</span></div>
+</div>
+</section>
+<section id="bandwidth">
+<div class="card">
+<div class="card-header"><span class="icon">📡</span><h2>带宽需求</h2><span class="tag">传输</span></div>
+<div class="formula">BW = W×H×D×F ÷ 8</div>
+<div class="field-group">
+<div class="field"><label>分辨率 W (px)</label><input type="number" id="bw-w" value="2592" min="1" step="1"></div>
+<div class="field"><label>分辨率 H (px)</label><input type="number" id="bw-h" value="1944" min="1" step="1"></div>
+</div>
+<div class="field-group">
+<div class="field"><label>帧率 (FPS)</label><input type="number" id="bw-fps" value="30" min="0.1" step="any"></div>
+<div class="field"><label>位深</label>
+<select id="bw-depth">
+<option value="8">8 bit</option>
+<option value="10">10 bit</option>
+<option value="12">12 bit</option>
+<option value="16">16 bit</option>
+</select></div>
+</div>
+<div class="result"><span class="rlabel">带宽需求：</span><span class="rval blue" id="bw-val">151.2</span><span class="runit">MB/s</span><span class="rsub" id="bw-sub"></span></div>
+<div class="extra" id="bw-extra"></div>
+</div>
+</section>
+<section id="framerate">
+<div class="card">
+<div class="card-header"><span class="icon">⏱</span><h2>最小帧率</h2><span class="tag">节拍</span></div>
+<div class="formula">FPS = v ÷ (FOV − L − margin)</div>
+<div class="field-group">
+<div class="field"><label>运动速度 v (mm/s)</label><input type="number" id="fps-v" value="200" min="0.1" step="any"></div>
+<div class="field"><label>视野 FOV (mm)</label><input type="number" id="fps-fov" value="120" min="1" step="any"></div>
+</div>
+<div class="field-group">
+<div class="field"><label>物体长度 L (mm)</label><input type="number" id="fps-l" value="100" min="0" step="any"></div>
+<div class="field"><label>安全边距 (mm)</label><input type="number" id="fps-margin" value="10" min="0" step="any"></div>
+</div>
+<div class="result"><span class="rlabel">最小触发帧率：</span><span class="rval blue" id="fps-val">6.7</span><span class="runit">FPS</span><span class="rsub" id="fps-sub"></span></div>
+</div>
+</section>
+<section id="pixelpitch">
+<div class="card">
+<div class="card-header"><span class="icon">📐</span><h2>像素当量</h2><span class="tag">精度</span></div>
+<div class="formula">像素当量 = FOV ÷ 分辨率</div>
+<div class="field-group">
+<div class="field"><label>视野 FOV (mm)</label><input type="number" id="pp-fov" value="50" min="0.1" step="any"></div>
+<div class="field"><label>传感器分辨率 (px)</label><input type="number" id="pp-res" value="1280" min="1" step="1"></div>
+</div>
+<div class="field"><label>目标检测精度 (mm) <span class="hint">用于对比</span></label><input type="number" id="pp-target" value="0.05" min="0.001" step="any"></div>
+<div class="result"><span class="rlabel">像素当量：</span><span class="rval blue" id="pp-val">0.0391</span><span class="runit">mm/pixel</span><span class="rsub" id="pp-sub"></span></div>
+<div class="extra" id="pp-extra"></div>
+</div>
+</section>
+<section id="linescan">
+<div class="card">
+<div class="card-header"><span class="icon">📏</span><h2>线阵行频</h2><span class="tag">线扫</span></div>
+<div class="formula">行频 = v ÷ Δy</div>
+<div class="field-group">
+<div class="field"><label>运动速度 v (mm/s)</label><input type="number" id="line-v" value="2000" min="0.1" step="any"></div>
+<div class="field"><label>纵向精度 Δy (mm)</label><input type="number" id="line-dy" value="0.05" min="0.001" step="any"></div>
+</div>
+<div class="field"><label>横向视野 FOV (mm)</label><input type="number" id="line-fov" value="200" min="1" step="any"></div>
+<div class="result"><span class="rlabel">所需行频：</span><span class="rval blue" id="line-val">40,000</span><span class="runit">Hz</span><span class="rsub" id="line-sub"></span></div>
+</div>
+</section>
+<section id="dof">
+<div class="card">
+<div class="card-header"><span class="icon">🌄</span><h2>景深估算</h2><span class="tag">镜头</span></div>
+<div class="formula">DOF ≈ 2 × F × δ × β</div>
+<div class="field-group">
+<div class="field"><label>光圈 F 值</label>
+<select id="dof-f">
+<option value="1.4">F/1.4</option><option value="2">F/2.0</option>
+<option value="2.8">F/2.8</option><option value="4" selected>F/4.0</option>
+<option value="5.6">F/5.6</option><option value="8">F/8.0</option>
+<option value="11">F/11</option><option value="16">F/16</option>
+</select></div>
+<div class="field"><label>放大倍率 β</label><input type="number" id="dof-beta" value="0.05" min="0.0001" step="any"></div>
+</div>
+<div class="result"><span class="rlabel">估算景深：</span><span class="rval blue" id="dof-val">1.38</span><span class="runit">mm</span><span class="rsub" id="dof-sub"></span></div>
+</div>
+</section>
+<section id="interfaces">
+<div class="card">
+<div class="card-header"><span class="icon">🔌</span><h2>接口带宽速查</h2><span class="tag">参考</span></div>
+<div style="overflow-x:auto">
+<table class="intf-table">
+<thead><tr><th>接口</th><th>有效带宽</th><th>最大距离</th><th style="text-align:center">满足当前需求</th></tr></thead>
+<tbody>
+<tr><td>USB 2.0</td><td>~35 MB/s</td><td>5 m</td><td style="text-align:center"><span class="intf-check" id="intf-usb2">—</span></td></tr>
+<tr><td>USB 3.0</td><td>~350 MB/s</td><td>5 m</td><td style="text-align:center"><span class="intf-check" id="intf-usb3">—</span></td></tr>
+<tr><td>GigE</td><td>~100 MB/s</td><td>100 m</td><td style="text-align:center"><span class="intf-check" id="intf-gige">—</span></td></tr>
+<tr><td>5GigE</td><td>~500 MB/s</td><td>100 m</td><td style="text-align:center"><span class="intf-check" id="intf-5gige">—</span></td></tr>
+<tr><td>Camera Link</td><td>~680 MB/s</td><td>10 m</td><td style="text-align:center"><span class="intf-check" id="intf-clink">—</span></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="overview">
+<div class="rec-card" id="rec-card">
+<h2>📋 选型推荐方案</h2>
+<p class="sub" id="rec-subtitle">基于上方所有输入参数自动生成</p>
+<div class="rec-section"><div class="rec-section-title">📥 输入参数</div><div class="rec-params" id="rec-params"></div></div>
+<div class="rec-divider"></div>
+<div class="rec-section"><div class="rec-section-title">✅ 推荐方案</div>
+<div class="rec-grid" id="rec-grid">
+<div class="rec-item"><div class="label">相机类型</div><div class="value" id="rec-camtype">面阵相机</div><div class="note" id="rec-camnote">500 万像素 CMOS</div><span class="rec-badge" id="rec-cambadge">全局快门</span></div>
+<div class="rec-item"><div class="label">传感器分辨率</div><div class="value" id="rec-res">2592 × 1944</div><div class="note" id="rec-resnote">像素当量 0.0193 mm/px</div></div>
+<div class="rec-item"><div class="label">镜头焦距</div><div class="value" id="rec-focal">12 mm</div><div class="note" id="rec-focalnote">配 1/2″ 靶面</div></div>
+<div class="rec-item"><div class="label">推荐接口</div><div class="value green" id="rec-intf">USB 3.0</div><div class="note" id="rec-intfnote">带宽充裕</div></div>
+<div class="rec-item"><div class="label">曝光 & 光源</div><div class="value" id="rec-light">频闪 LED</div><div class="note" id="rec-lightnote">最大曝光 103 µs</div></div>
+<div class="rec-item"><div class="label">帧率需求</div><div class="value" id="rec-fps">6.7 FPS</div><div class="note" id="rec-fpsnote">低帧率，常规满足</div></div>
+</div>
+</div>
+</div>
+</section>
+<div class="action-bar"><button class="btn-action" id="btn-refresh"><span class="icon">🔄</span> 刷新推荐方案</button></div>
+<div class="footer">工业相机选型计算器 &nbsp;·&nbsp; <a href="javascript:void(0)" onclick="window.print()" style="color:#007aff;text-decoration:none">打印</a></div>
+</div>
 <button class="back-top" id="back-top" title="回到顶部">⬆</button>
-
 <script src="js/app.js"></script>
 </body>
 </html>
